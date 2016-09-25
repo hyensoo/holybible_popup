@@ -1,0 +1,60 @@
+<head>
+    <script language='javascript' type='text/javascript'>
+/***********************************
+/ 이미지 사이즈에 맞게 새창띄우기
+/***********************************/
+function OpenImage(s){
+
+        srcImg = new Image();
+        clientWidth = screen.width;
+        clientHeight = screen.height;
+        srcImg.src = s;
+ 
+        var srcFileName = srcImg.src.substr(srcImg.src.lastIndexOf("/")+1, srcImg.src.length);
+
+        win = window.open("","","width=15,height=15,scrollbars=no,resizable=no,left="+(clientWidth/2-15)+",top="+(clientHeight/2-15)+"");
+        win.document.writeln("<html>");
+        win.document.writeln("<head>");
+        win.document.writeln("<title></title>");
+        win.document.writeln("</head>");
+        win.document.writeln("<body style='margin:0px;' bgcolor='#333333'>");
+        win.document.writeln("<table border='0' cellpadding='0' cellspacing='0' style='cursor:hand' onclick='self.close()'>");
+        win.document.writeln(" <tr>");
+        win.document.writeln("  <td align='center'><img src="+s+" name='winImg' style='cursor:hand' onclick='self.close()' alt='클릭하면 사라집니다'></td>");
+        win.document.writeln(" </tr>");
+        win.document.writeln("</table>");
+        win.document.writeln("</body>");
+        win.document.writeln("</html>");
+
+        srcImg = win.document.winImg;
+
+        while(true)
+                if(srcImg.readyState == "complete")
+                        break;
+       
+
+        var winWidth = srcImg.width+10;
+        var winHeight = srcImg.height+29;
+
+        var left = (clientWidth/2)-(srcImg.width/2);
+        var top = (clientHeight/2)-(srcImg.height/2);
+        if(clientWidth <= srcImg.width){
+                winWidth = clientWidth;
+                left = 0;
+                win.document.body.scroll = "auto";
+        }
+        if(clientHeight <= srcImg.height){
+                winHeight = clientHeight-30;
+                top = 0;
+                win.document.body.scroll = "auto";
+        }
+
+        win.moveTo(left, top);
+        win.resizeTo(winWidth, winHeight);
+}
+</script>
+</head>
+
+<body>
+    <img src="image.jpg" onclick="OpenImage(this.src)">
+</body>
